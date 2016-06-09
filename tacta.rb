@@ -41,6 +41,12 @@ def action_delete( contacts )
    puts
 end
 
+def action_error
+   puts
+   puts "Sorry, I don't recognize that command."
+   puts
+end
+
 def show(contact)
    puts "#{contact[:name]}"
    puts "phone: #{contact[:phone]}"
@@ -60,10 +66,18 @@ def create_new
    contact
 end
 
+
+
 def ask(prompt)
    puts
    print prompt
    gets.chomp
+end
+
+def contact_exists?(contacts, response)
+  return flase unless response =~ /[0-9]+/
+  i = response.to_i
+  !contacts[i-1].nil?
 end
 
 contacts = []
@@ -82,11 +96,13 @@ loop do
 
    break if response == "q"
 
-   if response == "n"
+    if response == "n"
       action_new( contacts )
-   elsif response == "d"
+    elsif response == "d"
       action_delete( contacts )
-   else
+    elsif contact_exists?(contacts, response)
       action_show( contacts, response.to_i )
-   end
+    else
+      action_error
+    end
 end
