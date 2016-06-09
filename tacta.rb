@@ -66,8 +66,6 @@ def create_new
    contact
 end
 
-
-
 def ask(prompt)
    puts
    print prompt
@@ -75,7 +73,7 @@ def ask(prompt)
 end
 
 def contact_exists?(contacts, response)
-  return flase unless response =~ /[0-9]+/
+  return false unless response =~ /[0-9]+/
   i = response.to_i
   !contacts[i-1].nil?
 end
@@ -89,20 +87,26 @@ contacts << { name: "Genghis Khan"    , phone: "+976 2 194 2222" , email: "conta
 contacts << { name: "Malcom X"        , phone: "+1 310 155 8822" , email: "x@theroost.org"     }
 
 loop do
-   index( contacts )
+  index( contacts )
 
-   puts
-   response = ask "Who would you like to see (n for new, d for delete, q to quit)? "
+  puts
+  response = ask "Who would you like to see (n for new, d for delete, q to quit)? "
 
-   break if response == "q"
+  break if response == "q"
 
-    if response == "n"
-      action_new( contacts )
-    elsif response == "d"
-      action_delete( contacts )
-    elsif contact_exists?(contacts, response)
+  if response == "n"
+    action_new( contacts )
+  elsif response == "d"
+    action_delete( contacts )
+  elsif response =~ /[0-9]+/
+    if contact_exists?(contacts, response)
       action_show( contacts, response.to_i )
     else
-      action_error
+      puts
+      puts "That contact does not exist!"
+      puts
     end
+  else
+    action_error
+  end
 end
