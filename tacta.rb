@@ -1,4 +1,4 @@
-# tacta.rb
+# tacta.rb 
 
 def index(contacts)
   contacts.each_with_index do |contact, i|
