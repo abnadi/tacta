@@ -27,6 +27,11 @@ post '/contacts' do
    redirect "/contacts/#{i}"
 end
 
+#New Contacts
+get '/contacts/new' do
+   erb :'contacts/new'
+end
+
 #show individual contacts
 get '/contacts/:i' do
    @i = params[:i].to_i
@@ -35,10 +40,7 @@ get '/contacts/:i' do
    erb :'contacts/show'
 end
 
-#New Contacts
-get '/contacts/new' do
-   erb :'contacts/new'
-end
+
 
 #Edit
 get '/contacts/:i/edit' do
@@ -49,7 +51,7 @@ get '/contacts/:i/edit' do
 
    erb :'contacts/edit'
 end
-
+ #EDit Post
 post '/contacts/:i/update' do
    i = params[:i].to_i
 
@@ -60,4 +62,15 @@ post '/contacts/:i/update' do
    write_contacts( contacts )
 
    redirect "/contacts/#{i}"
+end
+
+#Delete
+get '/contacts/:i/delete' do
+   i = params[:i].to_i
+
+   contacts = read_contacts
+   contacts.delete_at( i )
+   write_contacts( contacts )
+
+   redirect "/contacts"
 end
