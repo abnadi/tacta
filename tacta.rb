@@ -33,6 +33,19 @@ def show(contact)
    puts "email: #{contact[:email]}"
 end
 
+def create_new
+   contact = {}
+
+   puts
+   puts "Enter contact info:"
+
+   contact[:name ] = ask "Name? "
+   contact[:phone] = ask "Phone? "
+   contact[:email] = ask "Email? "
+
+   contact
+end
+
 def ask(prompt)
    puts
    print prompt
